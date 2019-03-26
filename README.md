@@ -28,7 +28,7 @@ allprojects {
 ```
 dependencies
 {
-	implementation 'com.github.alexjuca:kiyo:v0.0.1'
+	implementation 'com.github.AlexJuca:Kiyo:0.0.1'
 }
 ```
 
