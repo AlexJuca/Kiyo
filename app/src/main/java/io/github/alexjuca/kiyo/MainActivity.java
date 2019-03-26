@@ -44,9 +44,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Kiyo.with(this).withView(findViewById(android.R.id.content)).
-                withPermission(Manifest.permission.CALL_PHONE).
-                withReason("Make a call").withListener(kiyoListener).verify();
+        Kiyo.with(this).withPermission(Manifest.permission.CALL_PHONE).withListener(kiyoListener).verify();
     }
 
     @SuppressLint("MissingPermission")

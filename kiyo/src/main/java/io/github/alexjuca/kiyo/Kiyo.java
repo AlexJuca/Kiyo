@@ -16,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import android.view.View;
 
 public class Kiyo extends ActivityCompat {
     /**
@@ -28,9 +27,7 @@ public class Kiyo extends ActivityCompat {
     private String[] permissions;
     private Context mContext;
     private KiyoListener mKiyoListener;
-    private String mReason;
     private int mRequestCode = 0;
-    private View mRootView;
 
     public Kiyo(Context context) {
         this.mKiyoListener = null;
@@ -50,28 +47,6 @@ public class Kiyo extends ActivityCompat {
         }
     }
 
-    /***
-     * Pass in a context to setup a Kiyo object
-     * @param context
-     * @return
-     */
-    public Kiyo check(@NonNull Context context) {
-        if (context == null) {
-            throw new IllegalArgumentException("Context required");
-        } else {
-            return new Kiyo(context);
-        }
-    }
-
-    public Kiyo withView(@NonNull View view) {
-        if (view == null) {
-            throw new IllegalArgumentException("Must provide a view");
-        } else {
-            this.mRootView = view;
-        }
-        return this;
-    }
-
     /**
      * Setup a permission request by passing in a permission
      *
@@ -86,7 +61,7 @@ public class Kiyo extends ActivityCompat {
         return this;
     }
 
-    public Kiyo withPermissions(@NonNull String[] permissions) {
+    private Kiyo withPermissions(@NonNull String[] permissions) {
         if (permissions == null) {
             throw new IllegalArgumentException("Response can not be null. See Manifest permissions to set a permission");
         } else {
@@ -104,40 +79,7 @@ public class Kiyo extends ActivityCompat {
     public Kiyo withListener(@NonNull KiyoListener listener) {
         if (listener == null) {
             throw new IllegalArgumentException("Must have mKiyo Listener");
-        } else {
-            this.mKiyoListener = listener;
-        }
-        return this;
-    }
-
-    /***
-     * Set's up the text to be shown to the user when the user needs explanation
-     * regarding the use of a certain permission.
-     * @param reason - A String object containing the reason a permission is needed.
-     * @return Kiyo object
-     */
-    public Kiyo withReason(@NonNull String reason) {
-        if (reason == null || reason.isEmpty()) {
-            throw new IllegalArgumentException("Kiyo must be passed a reason why this permission is needed and can not be empty");
-        } else {
-            mReason = reason;
-        }
-        return this;
-    }
-
-    /***
-     * Set up the text to be shown to the user when the user needs explanation
-     * regarding the use of a certain permission.
-     * @param textResourceId - An Android String resource id pointing to the reason
-     *                       the app needs a specified permission.
-     * @return Kiyo object
-     */
-    public Kiyo withReason(@NonNull int textResourceId) {
-        if (textResourceId == 0) {
-            throw new Resources.NotFoundException("Text resource for Id not found");
-        } else {
-            mReason = mContext.getString(textResourceId);
-        }
+        } else this.mKiyoListener = listener;
         return this;
     }
 
@@ -154,11 +96,6 @@ public class Kiyo extends ActivityCompat {
                 requestPermissions(((AppCompatActivity) mContext), new String[]{permission}, mRequestCode);
                 if (mKiyoListener != null) {
                     mKiyoListener.onShouldShowRequestPermissionRationale();
-                    if (checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED) {
-                        mKiyoListener.onPermissionAccepted(PackageManager.PERMISSION_GRANTED);
-                    } else {
-                        mKiyoListener.onPermissionDenied(PackageManager.PERMISSION_DENIED);
-                    }
                 }
             }
         }
@@ -184,10 +121,6 @@ public class Kiyo extends ActivityCompat {
         }
     }
 
-    private void setListener(KiyoListener listener) {
-        this.mKiyoListener = listener;
-    }
-
     /***
      * This method verifies if the permission exists.
      * This method should be the last method to call in the chain.
@@ -198,21 +131,20 @@ public class Kiyo extends ActivityCompat {
         return this;
     }
 
-    public Kiyo verifyMultiple() {
+    private Kiyo verifyMultiple() {
         checkIfMultiplePermissions(mContext, permissions);
         return this;
     }
 
-    public Kiyo onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 0) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 if (this.mKiyoListener != null)
-                    this.mKiyoListener.onPermissionAccepted(0);
+                    this.mKiyoListener.onPermissionAccepted(PackageManager.PERMISSION_GRANTED);
             } else {
                 if (mKiyoListener != null)
-                    this.mKiyoListener.onPermissionDenied(1);
+                    this.mKiyoListener.onPermissionDenied(PackageManager.PERMISSION_DENIED);
             }
         }
-        return this;
     }
 }
