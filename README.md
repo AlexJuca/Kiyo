@@ -11,7 +11,7 @@ Kiyo is a simple to use and light-weight android permissions Library for Android
 Download
 --------
 
-Download the latest AAR from via Gradle:
+Download the latest version via Gradle:
 
 **Step 1:** Include jitpack to your projects build.gradle file
 ```
