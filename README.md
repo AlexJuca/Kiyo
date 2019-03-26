@@ -57,7 +57,7 @@ private KiyoListener kiyoListener = new KiyoListener() {
     };
 ```
 
-**Step 2:** Set up Kiyo and define the permission that you need using the ```withPermission()``` method. Also pass in the KiyoListener that you defined to the ```withListener()``` method. Then call verify to start the verification process. 
+**Step 2:** Set up Kiyo and define the permission that you need using the ```withPermission()``` method. Also pass in the KiyoListener that you defined to the ```withListener()``` method. Then call ```verify()``` to start the verification process. 
 
 ```java
     Kiyo.with(this).withPermission(Manifest.permission.CALL_PHONE).withListener(kiyoListener).verify();
