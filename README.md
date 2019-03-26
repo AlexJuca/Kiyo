@@ -6,6 +6,9 @@
 </p>
 
 
+
+[![](https://jitpack.io/v/AlexJuca/Kiyo.svg)](https://jitpack.io/#AlexJuca/Kiyo)
+
 Kiyo is a simple to use and light-weight android permissions Library for Android M (API 23) and above.
 
 Download
