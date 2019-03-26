@@ -19,7 +19,7 @@ public interface KiyoListener {
 
     /**
      * Called when a Permission has not been granted by
-     * the device. This callback will always return 1
+     * the device. This callback will always return -1
      * corresepending to Android's PERMISSION_DENIED constant.
      * @param response an integer describing the success/failure value
      */
