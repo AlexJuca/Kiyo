@@ -31,7 +31,7 @@ allprojects {
 ```
 dependencies
 {
-	implementation 'com.github.AlexJuca:Kiyo:0.0.1'
+	implementation 'com.github.AlexJuca:Kiyo:0.0.2'
 }
 ```
 
@@ -132,7 +132,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 ## Version history
-``` 0.0.1: check for single permission - 26/03/2019 ``` <br/>
+``` 0.0.1: check for single permission - 24/03/2019 ``` <br/>
+``` 0.0.2: Fix compile issues in libraries using APIs lower than 23. - 26/03/2019 ``` <br/>
 
 License
 --------
