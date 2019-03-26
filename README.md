@@ -31,10 +31,12 @@ dependencies
 	implementation 'com.github.alexjuca:kiyo:v0.0.1'
 }
 ```
+
+
 How to use
 ----------
 
-**Step 1:** Set up a KiyoListener to handle callbacks.
+**Step 1:** Set up a KiyoListener to handle callbacks. 
 ```java
 
 private KiyoListener kiyoListener = new KiyoListener() {
@@ -55,11 +57,28 @@ private KiyoListener kiyoListener = new KiyoListener() {
     };
 ```
 
-**Step 2:** Set up Kiyo and define 
+**Step 2:** Set up Kiyo and define the permission that you need using the ```withPermission()``` method. Also pass in the KiyoListener that you defined to the ```withListener()``` method. Then call verify to start the verification process. 
+
 ```java
     Kiyo.with(this).withPermission(Manifest.permission.CALL_PHONE).withListener(kiyoListener).verify();
 ```
 
+**Step 3:** Implement the ```onRequestPermissionsResult()``` method in your Activity and in it's body call ```Kiyo.with(this).withListener(kiyoListener).onRequestPermissionsResult(requestCode, permissions, grantResults);``` passing in the same arguments.
+
+
+```java
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Kiyo.with(this).withListener(kiyoListener).onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+```
+
+
+More context
+----------
+
+```java
 public class MainActivity extends AppCompatActivity {
     private KiyoListener kiyoListener = new KiyoListener() {
         @Override
@@ -106,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
         Kiyo.with(this).withListener(kiyoListener).onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }
+```
 
 
 ## Version history

@@ -10,8 +10,6 @@ package io.github.alexjuca.kiyo;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
