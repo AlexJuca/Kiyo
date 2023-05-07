@@ -10,6 +10,7 @@ package io.github.alexjuca.kiyo;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -55,7 +56,7 @@ public class Kiyo extends ActivityCompat {
         return this;
     }
 
-    private Kiyo withPermissions(@NonNull String[] permissions) {
+    public Kiyo withPermissions(@NonNull String[] permissions) {
         if (permissions.length == 0) {
             throw new IllegalArgumentException("Permission can not be null. See Manifest permissions to set a permission");
         } else {
@@ -121,9 +122,8 @@ public class Kiyo extends ActivityCompat {
         checkIfPermissionExists(mContext, permission);
     }
 
-    private Kiyo verifyMultiple() {
+    public void verifyMultiple() {
         checkIfMultiplePermissions(mContext, permissions);
-        return this;
     }
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
