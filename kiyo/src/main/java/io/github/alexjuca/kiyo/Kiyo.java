@@ -10,6 +10,7 @@ package io.github.alexjuca.kiyo;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -23,9 +24,9 @@ public class Kiyo extends ActivityCompat {
      */
     private String permission;
     private String[] permissions;
-    private Context mContext;
+    private final Context mContext;
     private KiyoListener mKiyoListener;
-    private int mRequestCode = 0;
+    private final int mRequestCode = 0;
 
     public Kiyo(Context context) {
         this.mKiyoListener = null;
@@ -38,11 +39,7 @@ public class Kiyo extends ActivityCompat {
      * @return
      */
     public static Kiyo with(@NonNull Context context) {
-        if (context == null) {
-            throw new IllegalArgumentException("Context required");
-        } else {
-            return new Kiyo(context);
-        }
+        return new Kiyo(context);
     }
 
     /**
@@ -51,17 +48,17 @@ public class Kiyo extends ActivityCompat {
      * @throws IllegalArgumentException
      */
     public Kiyo withPermission(@NonNull String permission) {
-        if (permission == null) {
-            throw new IllegalArgumentException("Response can not be null. See Manifest permissions to set a permission");
+        if (permission.isEmpty()) {
+            throw new IllegalArgumentException("Permission can not be null. See Manifest permissions to set a permission");
         } else {
             this.permission = permission;
         }
         return this;
     }
 
-    private Kiyo withPermissions(@NonNull String[] permissions) {
-        if (permissions == null) {
-            throw new IllegalArgumentException("Response can not be null. See Manifest permissions to set a permission");
+    public Kiyo withPermissions(@NonNull String[] permissions) {
+        if (permissions.length == 0) {
+            throw new IllegalArgumentException("Permission can not be null. See Manifest permissions to set a permission");
         } else {
             this.permissions = permissions;
         }
@@ -75,9 +72,7 @@ public class Kiyo extends ActivityCompat {
      * @return this
      */
     public Kiyo withListener(@NonNull KiyoListener listener) {
-        if (listener == null) {
-            throw new IllegalArgumentException("Must have mKiyo Listener");
-        } else this.mKiyoListener = listener;
+        this.mKiyoListener = listener;
         return this;
     }
 
@@ -122,16 +117,13 @@ public class Kiyo extends ActivityCompat {
     /***
      * This method verifies if the permission exists.
      * This method should be the last method to call in the chain.
-     * @return this
      */
-    public Kiyo verify() {
+    public void verify() {
         checkIfPermissionExists(mContext, permission);
-        return this;
     }
 
-    private Kiyo verifyMultiple() {
+    public void verifyMultiple() {
         checkIfMultiplePermissions(mContext, permissions);
-        return this;
     }
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
